@@ -3,9 +3,8 @@
 # Usuários permitidos: { "usuario": "senha" }
 # Troque por hashes bcrypt em produção
 USUARIOS = {
-    "matheus": "senha123",
     "ana": "senha456",
-    "carlos": "senha789",
+    "luana": "luana2006"
 }
 
 # Marcas disponíveis para venda
