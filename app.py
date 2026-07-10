@@ -125,12 +125,95 @@ st.markdown(f"""
         color: {ACCENT} !important;
     }}
 
-    /* Inputs */
+    /* Inputs de texto e número */
     [data-testid="stTextInput"] input,
     [data-testid="stNumberInput"] input {{
         background: {INPUT_BG} !important;
         border-color: {BORDER} !important;
         border-radius: 8px !important;
+        color: {TEXT} !important;
+    }}
+
+    /* Selectbox — campo fechado */
+    [data-testid="stSelectbox"] > div > div,
+    [data-testid="stSelectbox"] > div > div > div {{
+        background: {INPUT_BG} !important;
+        border-color: {BORDER} !important;
+        border-radius: 8px !important;
+        color: {TEXT} !important;
+    }}
+    /* Selectbox — texto selecionado e placeholder */
+    [data-testid="stSelectbox"] span,
+    [data-testid="stSelectbox"] p {{
+        color: {TEXT} !important;
+    }}
+    /* Selectbox — ícone chevron */
+    [data-testid="stSelectbox"] svg {{
+        fill: {TEXT_SEC} !important;
+    }}
+    /* Selectbox — lista dropdown (popover) */
+    [data-testid="stSelectbox"] ul,
+    div[data-baseweb="popover"] ul,
+    div[data-baseweb="menu"] {{
+        background: {INPUT_BG} !important;
+        border: 1px solid {BORDER} !important;
+        border-radius: 8px !important;
+    }}
+    /* Selectbox — itens da lista */
+    div[data-baseweb="menu"] li,
+    div[data-baseweb="menu"] [role="option"] {{
+        background: {INPUT_BG} !important;
+        color: {TEXT} !important;
+    }}
+    /* Selectbox — item em hover */
+    div[data-baseweb="menu"] li:hover,
+    div[data-baseweb="menu"] [role="option"]:hover,
+    div[data-baseweb="menu"] [aria-selected="true"] {{
+        background: {BORDER} !important;
+        color: {TEXT} !important;
+    }}
+
+    /* Multiselect — campo */
+    [data-testid="stMultiSelect"] > div > div {{
+        background: {INPUT_BG} !important;
+        border-color: {BORDER} !important;
+        border-radius: 8px !important;
+        color: {TEXT} !important;
+    }}
+    [data-testid="stMultiSelect"] span,
+    [data-testid="stMultiSelect"] input {{
+        color: {TEXT} !important;
+        background: transparent !important;
+    }}
+    /* Multiselect — tags selecionadas */
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] {{
+        background: {ACCENT} !important;
+        border-radius: 6px !important;
+    }}
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] span {{
+        color: #fff !important;
+    }}
+    /* Multiselect — lista dropdown */
+    [data-testid="stMultiSelect"] ul,
+    [data-baseweb="popover"] ul {{
+        background: {INPUT_BG} !important;
+        border: 1px solid {BORDER} !important;
+        border-radius: 8px !important;
+    }}
+    [data-baseweb="popover"] li,
+    [data-baseweb="popover"] [role="option"] {{
+        background: {INPUT_BG} !important;
+        color: {TEXT} !important;
+    }}
+    [data-baseweb="popover"] li:hover,
+    [data-baseweb="popover"] [role="option"]:hover {{
+        background: {BORDER} !important;
+        color: {TEXT} !important;
+    }}
+
+    /* Radio buttons — texto */
+    [data-testid="stRadio"] label,
+    [data-testid="stRadio"] span {{
         color: {TEXT} !important;
     }}
 
