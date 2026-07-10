@@ -3,8 +3,8 @@
 import streamlit as st
 from datetime import date
 from auth import requer_login, logout
-from sheets import gravar_visitas
-from config import MARCAS, MOTIVOS_NAO_VENDA, BASE_URL_FOTOS
+from sheets import gravar_visitas, upload_foto_drive
+from config import MARCAS, MOTIVOS_NAO_VENDA
 
 # ── Configuração da página ──────────────────────────────────────────────────
 st.set_page_config(
@@ -303,33 +303,28 @@ enviar = st.button(
 )
 
 if enviar:
-    linhas = [c.copy() for c in clientes_data if (c["cnpj"].strip() or c["codigo_cliente"].strip())]
-    
-    import os
     from datetime import datetime
-    
-    os.makedirs("static", exist_ok=True)
-    
-    for c in linhas:
-        foto_obj = c.pop("foto_objeto", None)
-        if foto_obj is not None:
-            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            ext = os.path.splitext(foto_obj.name)[1]
-            if not ext:
-                ext = ".jpg"
-            safe_filename = f"{ts}_{c['vendedor']}_cliente_{c['ordem_cliente']}{ext}"
-            safe_filename = "".join(ch for ch in safe_filename if ch.isalnum() or ch in "._-")
-            filepath = os.path.join("static", safe_filename)
-            
-            with open(filepath, "wb") as f:
-                f.write(foto_obj.getbuffer())
-                
-            c["foto_cliente"] = f'=HYPERLINK("{BASE_URL_FOTOS}{safe_filename}"; "Ver Foto")'
-        else:
-            c["foto_cliente"] = ""
-            
-    with st.spinner("Gravando no Google Sheets..."):
+    import os
+
+    linhas = [c.copy() for c in clientes_data if (c["cnpj"].strip() or c["codigo_cliente"].strip())]
+
+    with st.spinner("Enviando fotos e gravando no Google Sheets..."):
+        for c in linhas:
+            foto_obj = c.pop("foto_objeto", None)
+            if foto_obj is not None:
+                ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+                ext = os.path.splitext(foto_obj.name)[1] or ".jpg"
+                safe_filename = f"{ts}_{c['vendedor']}_cliente_{c['ordem_cliente']}{ext}"
+                safe_filename = "".join(ch for ch in safe_filename if ch.isalnum() or ch in "._-")
+
+                foto_bytes = foto_obj.getvalue()
+                link = upload_foto_drive(foto_bytes, safe_filename, foto_obj.type or "image/jpeg")
+                c["foto_cliente"] = f'=HYPERLINK("{link}"; "Ver Foto")' if link else ""
+            else:
+                c["foto_cliente"] = ""
+
         sucesso = gravar_visitas(linhas)
+
     if sucesso:
         st.session_state.enviado = True
         st.rerun()

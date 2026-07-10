@@ -3,8 +3,9 @@
 # Usuários permitidos: { "usuario": "senha" }
 # Troque por hashes bcrypt em produção
 USUARIOS = {
+    "matheus": "senha123",
     "ana": "senha456",
-    "luana": "luana2006"
+    "carlos": "senha789",
 }
 
 # Marcas disponíveis para venda
@@ -38,8 +39,10 @@ MOTIVOS_NAO_VENDA = [
 # Nome da aba na planilha Google Sheets
 SHEET_NAME = "Visitas"
 
-# URL base para abrir as fotos localmente (usando o servidor estático do Streamlit)
-BASE_URL_FOTOS = "http://localhost:8501/app/static/"
+# ID da pasta no Google Drive onde as fotos serão salvas
+# Crie uma pasta no Drive, compartilhe com a service account e cole o ID aqui
+# O ID está na URL: drive.google.com/drive/folders/ESTE_TRECHO_AQUI
+DRIVE_PASTA_FOTOS_ID = ""  # preencher no secrets.toml (ver README)
 
 # Colunas da planilha (ordem exata)
 COLUNAS = [
